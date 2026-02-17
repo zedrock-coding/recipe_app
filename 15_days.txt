@@ -1,0 +1,73 @@
+### **Day 1: Project Setup & Basic UI**
+- Set up your Flutter project
+- Create the main screen with a list view for recipes
+- Learn: Flutter project structure, basic widgets (Scaffold, AppBar, ListView)
+
+### **Day 2: Data Model & Dummy Data**
+- Define a `Recipe` class
+- Create some dummy recipes data
+- Learn: Dart classes, data modeling
+
+### **Day 3: Display Recipes List**
+- Populate the list view with dummy data
+- Make each item tappable
+- Learn: ListView.builder, GestureDetector / InkWell
+
+### **Day 4: Add Recipe Screen**
+- Create a new screen for adding recipes
+- Use TextFields for input
+- Learn: Navigation, passing data between screens
+
+### **Day 5: Save Recipes Locally**
+- Use `SharedPreferences` or `Hive` for persistent storage
+- Save new recipes
+- Learn: Local storage basics
+
+### **Day 6: Display Saved Recipes**
+- Load recipes from storage on app start
+- Display them in the list
+- Learn: Async programming, data persistence
+
+### **Day 7: Edit & Delete Recipes**
+- Implement editing/deleting recipes
+- Add delete button
+- Learn: Stateful widgets, setState, list manipulation
+
+### **Day 8: Improve UI & Styling**
+- Add images, better layout, styling
+- Use `Card`, `Padding`, `Margins`
+- Learn: Flutter UI design principles
+
+### **Day 9: Search Feature**
+- Add a search bar to filter recipes
+- Learn: TextField, filtering lists
+
+### **Day 10: Add Recipe Details Screen**
+- Show full recipe details
+- Implement navigation to details screen
+- Learn: Passing data, nested screens
+
+### **Day 11: Image Picker & Media**
+- Allow users to add images to recipes
+- Use `image_picker` package
+- Learn: Accessing device media
+
+### **Day 12: Form Validation & User Feedback**
+- Validate input fields
+- Show success/error messages
+- Learn: Form validation, SnackBar
+
+### **Day 13: Improve User Experience**
+- Add animations or transitions
+- Improve responsiveness
+- Learn: Flutter animations, layout responsiveness
+
+### **Day 14: Testing & Debugging**
+- Test your app on emulator/device
+- Fix bugs
+- Learn: Debugging, testing basics
+
+### **Day 15: Final Touches & Deployment**
+- Final UI polish
+- Prepare for app release (if interested)
+- Learn: App icons, publishing basics
