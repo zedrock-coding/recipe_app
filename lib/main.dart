@@ -30,7 +30,13 @@ class Recipe {
     return prepTime + cookTime;
   }
   String displayRecipe() {
-    return 'Recipe: $label\nCategory: $category\nPrep Time: $prepTime minutes\nCook Time: $cookTime minutes\nServings: $servings\nIngredients:\n${ingredients.join('\n')}\nInstructions:\n${instructions.join('\n')}';
+    return '''Recipe: $label
+Category: $category
+Prep Time: $prepTime minutes
+Cook Time: $cookTime minutes
+Servings: $servings
+Ingredients:\n${ingredients.join('\n')}
+Instructions:\n${instructions.join('\n')}''';
   }
 
   const Recipe({
@@ -79,50 +85,61 @@ List<Recipe> sampleRecipes = [
 ];
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Recipe Book',
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
+      home: RecipeListScreen(),
+    );
+  }
+}
+
+class RecipeListScreen extends StatefulWidget {
+  @override
+  _RecipeListScreenState createState() => _RecipeListScreenState();
+}
+
+class _RecipeListScreenState extends State<RecipeListScreen> {
+  final Set<int> _expandedIndices = {};
+
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Recipe Book'),
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Recipe Book Home'),
-        ),
-        body: Center(
-          child: ListView.builder(
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                height: 100,
-                margin: EdgeInsets.all(10),
-                color: Colors.deepPurple[100],
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          content: SingleChildScrollView(
-                            child: Text(sampleRecipes[index].displayRecipe()),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                  child: Center(
-                    child: Text('Recipe: ${sampleRecipes[index].label}', style: TextStyle(fontSize: 20)),
-                  ),
-                ),
-              );
-            },
-            itemCount: sampleRecipes.length,
-          ),     
-        ),
-      ),
+      body: Center(
+        child: ListView.builder(
+        itemCount: sampleRecipes.length,
+        itemBuilder: (BuildContext context, int index) {      
+          final bool isExpanded = _expandedIndices.contains(index);
+          final String mainLabel = isExpanded
+              ? sampleRecipes[index].displayRecipe()
+              : 'Recipe: ${sampleRecipes[index].label}';
+          return GestureDetector(
+              onTap: () {
+                setState(() {
+                  if (isExpanded) {
+                    _expandedIndices.remove(index);
+                  } else {
+                    _expandedIndices.add(index);
+                  }
+                });
+              },
+              child: Container(
+            margin: EdgeInsets.all(10),
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(
+                mainLabel,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+          );
+        },
+      ))
     );
   }
 }
