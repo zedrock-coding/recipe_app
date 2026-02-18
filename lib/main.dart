@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-void main(){
+void main() {
   runApp(MyApp());
 }
 
@@ -17,18 +17,23 @@ class Recipe {
   void addIngredient(String ingredient) {
     ingredients.add(ingredient);
   }
+
   void addInstruction(String instruction) {
     instructions.add(instruction);
   }
+
   void removeIngredient(String ingredient) {
     ingredients.remove(ingredient);
   }
+
   void removeInstruction(String instruction) {
     instructions.remove(instruction);
   }
+
   int getTotalTime() {
     return prepTime + cookTime;
   }
+
   String displayRecipe() {
     return '''Recipe: $label
 Category: $category
@@ -89,6 +94,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: RecipeListScreen(),
+      routes: <String, WidgetBuilder>{
+        'NewRecipe': (BuildContext context) => NewRecipeScreen(),
+      },
     );
   }
 }
@@ -102,44 +110,86 @@ class _RecipeListScreenState extends State<RecipeListScreen> {
   final Set<int> _expandedIndices = {};
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Recipe Book'),
       ),
-      body: Center(
-        child: ListView.builder(
-        itemCount: sampleRecipes.length,
-        itemBuilder: (BuildContext context, int index) {      
-          final bool isExpanded = _expandedIndices.contains(index);
-          final String mainLabel = isExpanded
-              ? sampleRecipes[index].displayRecipe()
-              : 'Recipe: ${sampleRecipes[index].label}';
-          return GestureDetector(
-              onTap: () {
-                setState(() {
-                  if (isExpanded) {
-                    _expandedIndices.remove(index);
-                  } else {
-                    _expandedIndices.add(index);
-                  }
-                });
+      body: Column(
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => NewRecipeScreen()));
+            },
+            child: Icon(Icons.add),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: sampleRecipes.length,
+              itemBuilder: (BuildContext context, int index) {
+                final bool isExpanded = _expandedIndices.contains(index);
+                final String mainLabel = isExpanded
+                    ? sampleRecipes[index].displayRecipe()
+                    : 'Recipe: ${sampleRecipes[index].label}';
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      if (isExpanded) {
+                        _expandedIndices.remove(index);
+                      } else {
+                        _expandedIndices.add(index);
+                      }
+                    });
+                  },
+                  child: Container(
+                    margin: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      mainLabel,
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                );
               },
-              child: Container(
-            margin: EdgeInsets.all(10),
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(10),
             ),
-            child: Text(
-                mainLabel,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            ),
-          );
-        },
-      ))
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class NewRecipeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'New Recipe',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Color.fromARGB(255, 30, 30, 30),
+          ),
+        ),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Recipe Name',
+              ),              
+            )
+          ],
+        ),
+      ),
     );
   }
 }
